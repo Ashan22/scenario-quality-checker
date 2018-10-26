@@ -17,6 +17,10 @@ public class Scenario {
         this.numberOfSteps = numberOfSteps;
     }
 
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
     public int getNumberOfSteps() {
         return numberOfSteps;
     }
