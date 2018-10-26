@@ -5,7 +5,7 @@ university project for software engineering
 Start the scenario-checker and run from your terminal:
 
 ```bash
-curl -X POST http://server/api/v1/places.json -d @data/testplace.json \
+curl -X POST localhost:8080/check -d @data/exampleScenario.json \
 --header "Content-Type: application/json"
 ```
 
