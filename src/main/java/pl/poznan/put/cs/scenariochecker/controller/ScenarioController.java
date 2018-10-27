@@ -26,10 +26,6 @@ public class ScenarioController {
         return "scenario transformed";
     }
 
-    public void countSteps(Scenario scenario) {
-
-    }
-
     @GetMapping("/count")
     public String count() {
         this.scenarioStrategy = new CountStepsScenarioStrategy();
