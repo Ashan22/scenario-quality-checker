@@ -6,7 +6,8 @@ import pl.poznan.put.cs.scenariochecker.model.Scenario;
 @Service
 public class ScenarioCheckerService {
 
-    public void transform(Scenario scenario){
+    public Scenario transform(Scenario scenario){
         System.out.println(scenario);
+        return scenario;
     }
 }
