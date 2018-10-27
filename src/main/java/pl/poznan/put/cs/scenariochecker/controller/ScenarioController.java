@@ -2,8 +2,8 @@ package pl.poznan.put.cs.scenariochecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.poznan.put.cs.scenariochecker.controller.strategy.CountStepsScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.controller.strategy.ScenarioStrategy;
+import pl.poznan.put.cs.scenariochecker.transformations.CountStepsScenarioStrategy;
+import pl.poznan.put.cs.scenariochecker.transformations.ScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.service.ScenarioCheckerService;
 
@@ -32,7 +32,4 @@ public class ScenarioController {
         this.scenarioStrategy.processScenario(this.scenario);
         return String.valueOf(this.scenario.getNumberOfSteps());
     }
-
 }
-
-

@@ -1,4 +1,4 @@
-package pl.poznan.put.cs.scenariochecker.controller.strategy;
+package pl.poznan.put.cs.scenariochecker.transformations;
 
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 

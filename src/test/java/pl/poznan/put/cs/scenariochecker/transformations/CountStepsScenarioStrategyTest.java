@@ -1,4 +1,4 @@
-package pl.poznan.put.cs.scenariochecker.controller.strategy;
+package pl.poznan.put.cs.scenariochecker.transformations;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,16 +8,13 @@ import pl.poznan.put.cs.scenariochecker.model.Step;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class CountStepsScenarioStrategyTest {
 
     private Scenario scenario;
-
     private CountStepsScenarioStrategy countStepsScenarioStrategy;
-
     private Step oneStep;
-
     private Step stepWithNestedSteps;
 
     @Before
@@ -31,29 +28,23 @@ public class CountStepsScenarioStrategyTest {
     }
 
     @Test
-    public void testCountStepsScenarioStrategy_givenZeroSteps_expectZero(){
+    public void testCountStepsScenarioStrategy_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
-
         countStepsScenarioStrategy.processScenario(scenario);
-
         assertEquals(0, scenario.getNumberOfSteps());//Arrays.asList(oneStep)
     }
 
     @Test
-    public void testCountStepsScenarioStrategy_givenOneSteps_expectOne(){
+    public void testCountStepsScenarioStrategy_givenOneSteps_expectOne() {
         scenario.setSteps(Arrays.asList(oneStep));
-
         countStepsScenarioStrategy.processScenario(scenario);
-
         assertEquals(1, scenario.getNumberOfSteps());
     }
 
     @Test
-    public void testCountStepsScenarioStrategy_givenNestedSteps_expectThree(){
+    public void testCountStepsScenarioStrategy_givenNestedSteps_expectThree() {
         scenario.setSteps(Arrays.asList(stepWithNestedSteps));
-
         countStepsScenarioStrategy.processScenario(scenario);
-
         assertEquals(6, scenario.getNumberOfSteps());
     }
 }
