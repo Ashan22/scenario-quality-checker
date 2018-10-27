@@ -1,18 +1,13 @@
 package pl.poznan.put.cs.scenariochecker.service;
 
-/**
- * This is just an example to show that the logic should be outside the REST service.
- */
+import org.springframework.stereotype.Service;
+import pl.poznan.put.cs.scenariochecker.model.Scenario;
+
+@Service
 public class ScenarioCheckerService {
 
-    private final String[] transforms;
-
-    public ScenarioCheckerService(String[] transforms){
-        this.transforms = transforms;
-    }
-
-    public String transform(String text){
-        // of course normally it would to something based on transforms
-        return text.toUpperCase();
+    public Scenario transform(Scenario scenario){
+        System.out.println(scenario);
+        return scenario;
     }
 }
