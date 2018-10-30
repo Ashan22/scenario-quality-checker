@@ -9,6 +9,7 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
 
     @Override
     public void processScenario(Scenario scenario) {
+
         scenario.setNumberOfSpecialSteps(countSpecialSteps(scenario.getSteps()));
     }
 
@@ -21,3 +22,4 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
                 sum();
     }
 }
+
