@@ -14,4 +14,13 @@ public class ScenarioHelper {
     public static boolean isSpecialStep(Step step) {
         return step.getContent().startsWith("IF") || step.getContent().startsWith("FOR EACH");
     }
+
+    /**
+     * @param step
+     * @return true when step is step without Actor's
+     */
+    public static boolean isActorStep(Step step) {
+        return !step.getContent().startsWith("Bibliotekarz");
+    }
+
 }
