@@ -34,13 +34,10 @@ public class ScenarioController {
         return String.valueOf(this.scenario.getNumberOfSteps());
     }
 
-    @GetMapping("/countSpecialSteps")
+    @GetMapping("/steps/quantity")
         public String countSpecialSteps(){
             this.scenarioStrategy = new CountSpecialStepsScenarioStrategy();
             this.scenarioStrategy.processScenario(this.scenario);
-            return String.valueOf(this.scenario.getNumberOfSpecialSteps()-1);
+            return String.valueOf(this.scenario.getNumberOfSpecialSteps());
         }
-
-
-
     }

@@ -9,16 +9,15 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
 
     @Override
     public void processScenario(Scenario scenario) {
-        scenario.setNumberOfSpecialSteps(countSteps(scenario.getSteps()));
+        scenario.setNumberOfSpecialSteps(countSpecialSteps(scenario.getSteps()));
     }
 
-    private int countSteps(List<Step> steps) {
-        long deepCount = steps.stream()
-                .filter(step -> ScenarioHelper.isSpecialStep(step))
-                .map(step -> countSteps(step.getSubSteps()))
-                .mapToLong(Integer::intValue)
-                .sum();
-        return (int) (1 + deepCount);
+    private int countSpecialSteps(List<Step> steps) {
+        return  steps.
+                stream().
+                filter(ScenarioHelper::isSpecialStep).
+                map(step -> countSpecialSteps(step.getSubSteps()) + 1).
+                mapToInt(Integer::intValue).
+                sum();
     }
-
 }
