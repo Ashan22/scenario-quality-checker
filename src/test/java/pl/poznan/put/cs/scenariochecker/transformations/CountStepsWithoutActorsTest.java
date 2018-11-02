@@ -33,7 +33,7 @@ public class CountStepsWithoutActorsTest {
     public void testCountStepsWithoutActors_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
         countStepsWithoutActors.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfStepsWithoutActors());//Arrays.asList(oneStep)
+        assertEquals(0, scenario.getNumberOfStepsWithoutActors());
     }
 
     @Test

@@ -22,9 +22,6 @@ public class ScenarioHelper {
      * @return true when step is step without Actor's
      */
     public static boolean isNoActorStep(Step step, List<String> actors) {
-        for (String actor : actors) {
-            if (step.getContent().contains(actor)) return false;
-        }
-        return true;
+        return !actors.stream.anyMatch(actor->step.getContent().contains(actor));
     }
 }
