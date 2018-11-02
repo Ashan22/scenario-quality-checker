@@ -7,6 +7,7 @@ import pl.poznan.put.cs.scenariochecker.model.Step;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -19,11 +20,13 @@ public class CountStepsWithoutActorsTest {
 
     @Before
     public void setUp() {
+        List<String> actors = Arrays.asList("Bibliotekarz");
         this.scenario = new Scenario();
+        this.scenario.setActors(actors);
         this.countStepsWithoutActors = new CountStepsWithoutActors();
         this.oneStep = new Step("oneStep", Collections.emptyList());
-        Step firstNestepStep = new Step("IF Bibliotekarz step", Arrays.asList(oneStep));
-        stepWithNestedSteps = new Step("IF Bibliotekarz step", Arrays.asList(firstNestepStep, oneStep));
+        Step firstNestepStep = new Step("Bibliotekarz step", Arrays.asList(oneStep));
+        stepWithNestedSteps = new Step("IF step", Arrays.asList(firstNestepStep, oneStep));
     }
 
     @Test

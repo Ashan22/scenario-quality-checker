@@ -17,7 +17,7 @@ public class CountStepsWithoutActors extends ScenarioStrategy {
         return steps.
                 stream().
                 filter(step -> ScenarioHelper.isNoActorStep(step, actors)).
-                map(step -> countStepsWithoutActor(step.getSubSteps(), actors)).
+                map(step -> countStepsWithoutActor(step.getSubSteps(), actors) + 1).
                 mapToInt(Integer::intValue).
                 sum();
     }
