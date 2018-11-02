@@ -30,20 +30,20 @@ public class CountStepsWithoutActorsTest {
     public void testCountStepsWithoutActors_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
         countStepsWithoutActors.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfSteps());//Arrays.asList(oneStep)
+        assertEquals(0, scenario.getNumberOfStepsWithoutActors());//Arrays.asList(oneStep)
     }
 
     @Test
     public void testCountStepsWithoutActors_givenOneSteps_expectOne() {
         scenario.setSteps(Arrays.asList(oneStep));
         countStepsWithoutActors.processScenario(scenario);
-        assertEquals(1, scenario.getNumberOfSteps());
+        assertEquals(1, scenario.getNumberOfStepsWithoutActors());
     }
 
     @Test
     public void testCountStepsWithoutActors_givenNestedSteps_expectThree() {
         scenario.setSteps(Arrays.asList(stepWithNestedSteps));
         countStepsWithoutActors.processScenario(scenario);
-        assertEquals(2, scenario.getNumberOfSteps());
+        assertEquals(2, scenario.getNumberOfStepsWithoutActors());
     }
 }
