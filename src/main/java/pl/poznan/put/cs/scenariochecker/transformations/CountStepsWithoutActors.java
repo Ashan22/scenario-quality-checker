@@ -4,19 +4,20 @@ import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-public class CountStepsWithoutActors extends ScenarioStrategy{
+public class CountStepsWithoutActors extends ScenarioStrategy {
 
     @Override
     public void processScenario(Scenario scenario) {
-        scenario.setNumberOfStepsWithoutActors(countStepsWithoutActor(scenario.getSteps()));
+        scenario.setNumberOfStepsWithoutActors(countStepsWithoutActor(scenario.getSteps(), scenario.getActors()));
     }
 
-    private int countStepsWithoutActor(List<Step> steps){
-        return  steps.
+    private int countStepsWithoutActor(List<Step> steps, List<String> actors) {
+        return steps.
                 stream().
-                filter(step -> ScenarioHelper.isActorStep(step)).
-                map(step -> countStepsWithoutActor(step.getSubSteps()) + 1).
+                filter(step -> ScenarioHelper.isNoActorStep(step, actors)).
+                map(step -> countStepsWithoutActor(step.getSubSteps(), actors)).
                 mapToInt(Integer::intValue).
                 sum();
     }

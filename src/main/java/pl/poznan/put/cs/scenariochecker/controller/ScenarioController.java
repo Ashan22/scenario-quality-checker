@@ -35,7 +35,7 @@ public class ScenarioController {
     }
 
     @GetMapping("/steps/withoutActor")
-    public String countStepsWithoutActor(){
+    public String countStepsWithoutActor() {
         this.scenarioStrategy = new CountStepsWithoutActors();
         this.scenarioStrategy.processScenario(this.scenario);
         return String.valueOf(this.scenario.getNumberOfStepsWithoutActors());
