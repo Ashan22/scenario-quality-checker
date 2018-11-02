@@ -18,10 +18,13 @@ public class ScenarioHelper {
     }
 
     /**
-     * @param step
+     * @param step, list of actors
      * @return true when step is step without Actor's
      */
     public static boolean isNoActorStep(Step step, List<String> actors) {
-        return !actors.stream.anyMatch(actor->step.getContent().contains(actor));
+        for (String actor : actors) {
+            if (step.getContent().contains(actor)) return false;
+        }
+        return true;
     }
 }
