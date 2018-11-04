@@ -11,9 +11,15 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
 
     @Override
     public void processScenario(Scenario scenario) {
+<<<<<<< HEAD
         scenario.setNumberOfSpecialSteps(countSpecialSteps(scenario.getSteps()));
     }
 
+=======
+
+        scenario.setNumberOfSpecialSteps(countSpecialSteps(scenario.getSteps()));
+    }
+>>>>>>> b22096b24e78419f15860ed990a86dead566547c
 
     private int countSpecialSteps(List<Step> steps) {
         return  steps.
@@ -23,5 +29,5 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
                 mapToInt(Integer::intValue).
                 sum();
     }
-
 }
+
