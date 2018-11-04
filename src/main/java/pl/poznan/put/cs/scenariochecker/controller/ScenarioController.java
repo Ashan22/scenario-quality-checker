@@ -2,6 +2,7 @@ package pl.poznan.put.cs.scenariochecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.poznan.put.cs.scenariochecker.transformations.CountSpecialStepsScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.transformations.CountStepsScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.transformations.ScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
@@ -31,5 +32,12 @@ public class ScenarioController {
         this.scenarioStrategy = new CountStepsScenarioStrategy();
         this.scenarioStrategy.processScenario(this.scenario);
         return String.valueOf(this.scenario.getNumberOfSteps());
+    }
+
+    @GetMapping("/special-steps")
+    public String countSpecialSteps() {
+        this.scenarioStrategy = new CountSpecialStepsScenarioStrategy();
+        this.scenarioStrategy.processScenario(this.scenario);
+        return String.valueOf(this.scenario.getNumberOfSpecialSteps());
     }
 }
