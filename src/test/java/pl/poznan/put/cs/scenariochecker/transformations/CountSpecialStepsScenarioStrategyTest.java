@@ -34,14 +34,14 @@ public class CountSpecialStepsScenarioStrategyTest {
     public void testCountSpecialStepsScenarioStrategy_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
         countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfSpecialSteps());//Arrays.asList(oneStep)
+        assertEquals(0, scenario.getNumberOfSpecialSteps());
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenOneSteps_expectZero() {
         scenario.setSteps(Arrays.asList(oneStep));
         countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfSpecialSteps());//Arrays.asList(oneStep)
+        assertEquals(0, scenario.getNumberOfSpecialSteps());
     }
 
     @Test
