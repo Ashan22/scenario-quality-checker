@@ -21,9 +21,9 @@ public class ScenarioHelper {
      * @param step, list of actors
      * @return true when step is step without Actor's
      */
-    public static boolean isNoActorStep(Step step, List<String> actors) {
+    public static boolean isActorStep(Step step, List<String> actors) {
         for (String actor : actors) {
-            if (step.getContent().contains(actor)) return false;
+            if (step.getContent().startsWith(actor)) return false;
         }
         return true;
     }
