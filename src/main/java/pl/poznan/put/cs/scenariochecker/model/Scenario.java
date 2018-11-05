@@ -10,7 +10,4 @@ public class Scenario {
     private String systemActor;
     private List<Step> steps;
     private List<String> actors;
-    private int numberOfSteps;
-    private int numberOfStepsWithoutActors;
-    private int numberOfSpecialSteps;
 }
