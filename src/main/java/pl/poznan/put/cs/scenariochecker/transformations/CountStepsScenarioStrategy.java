@@ -11,8 +11,8 @@ public class CountStepsScenarioStrategy extends ScenarioStrategy {
      * @param scenario This method is responsible for proccessing scenario when user want to count number of steps
      */
     @Override
-    public void processScenario(Scenario scenario) {
-        scenario.setNumberOfSteps(countSteps(scenario.getSteps()));
+    public int processScenario(Scenario scenario) {
+        return countSteps(scenario.getSteps());
     }
 
     /**
@@ -21,7 +21,7 @@ public class CountStepsScenarioStrategy extends ScenarioStrategy {
      */
     private int countSteps(List<Step> steps) {
         long deepCount = steps.stream()
-                .filter(step -> ScenarioHelper.isSpecialStep(step))
+                .filter(ScenarioHelper::isSpecialStep)
                 .map(step -> countSteps(step.getSubSteps()))
                 .mapToLong(Integer::intValue)
                 .sum();
