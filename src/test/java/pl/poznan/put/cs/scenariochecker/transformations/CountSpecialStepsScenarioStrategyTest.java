@@ -33,28 +33,28 @@ public class CountSpecialStepsScenarioStrategyTest {
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
-        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countSpecialStepsScenarioStrategy.processScenario(scenario);
         assertEquals(0, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenOneSteps_expectZero() {
         scenario.setSteps(Collections.singletonList(oneStep));
-        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countSpecialStepsScenarioStrategy.processScenario(scenario);
         assertEquals(0, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenNestedSteps_expectThree() {
         scenario.setSteps(Collections.singletonList(stepWithNestedSteps));
-        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countSpecialStepsScenarioStrategy.processScenario(scenario);
         assertEquals(3, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenNestedSteps_expectSix() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
-        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countSpecialStepsScenarioStrategy.processScenario(scenario);
         assertEquals(6, actual);
     }
 

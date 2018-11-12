@@ -10,7 +10,7 @@ import java.util.List;
 public class CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy extends ScenarioStrategy {
 
     @Override
-    public int processScenario(Scenario scenario) {
+    public Object processScenario(Scenario scenario) {
         List<String> allActors = new ArrayList<>(scenario.getActors());
         allActors.add(scenario.getSystemActor());
         return countStepsWithoutActorsNameAtTheBeginning(scenario.getSteps(), allActors);

@@ -1,0 +1,48 @@
+package pl.poznan.put.cs.scenariochecker.transformations;
+
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+import pl.poznan.put.cs.scenariochecker.model.Scenario;
+import pl.poznan.put.cs.scenariochecker.model.Step;
+
+import java.util.List;
+
+public class ReturnSubScenariosStrategy extends ScenarioStrategy {
+
+    private int maxLevel;
+
+    @Override
+    public String processScenario(Scenario scenario) {
+        maxLevel = scenario.getLevel();
+        if (maxLevel <= 0) {
+            throw new ValueException("Level cannot be lower than 1");
+        }
+
+        JSONArray nestedSteps = createRecursivelyNestedStepsJson(scenario.getSteps(), 1);
+        JSONArray actorsJsonArray = new JSONArray();
+        actorsJsonArray.addAll(scenario.getActors());
+
+        return new JSONObject()
+                .appendField("title", scenario.getTitle())
+                .appendField("systemActor", scenario.getSystemActor())
+                .appendField("actors", actorsJsonArray)
+                .appendField("steps", nestedSteps)
+                .toJSONString();
+    }
+
+    private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, int currentLevel) {
+        JSONArray currentStepsArray = new JSONArray();
+
+        steps.forEach(step ->
+                currentStepsArray.add(new JSONObject()
+                        .appendField("content", step.getContent())
+                        .appendField("subSteps", currentLevel >= maxLevel ?
+                                new JSONArray() :
+                                createRecursivelyNestedStepsJson(step.getSubSteps(), currentLevel + 1)))
+        );
+
+        return currentStepsArray;
+    }
+
+}

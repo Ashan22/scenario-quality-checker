@@ -30,21 +30,21 @@ public class CountStepsScenarioStrategyTest {
     @Test
     public void testCountStepsScenarioStrategy_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
-        int actual = countStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countStepsScenarioStrategy.processScenario(scenario);
         assertEquals(0, actual);//Arrays.asList(oneStep)
     }
 
     @Test
     public void testCountStepsScenarioStrategy_givenOneSteps_expectOne() {
         scenario.setSteps(Collections.singletonList(oneStep));
-        int actual = countStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countStepsScenarioStrategy.processScenario(scenario);
         assertEquals(1, actual);
     }
 
     @Test
     public void testCountStepsScenarioStrategy_givenNestedSteps_expectThree() {
         scenario.setSteps(Collections.singletonList(stepWithNestedSteps));
-        int actual = countStepsScenarioStrategy.processScenario(scenario);
+        int actual = (int) countStepsScenarioStrategy.processScenario(scenario);
         assertEquals(6, actual);
     }
 }

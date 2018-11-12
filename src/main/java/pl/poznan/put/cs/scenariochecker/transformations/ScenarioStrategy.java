@@ -4,5 +4,5 @@ import pl.poznan.put.cs.scenariochecker.model.Scenario;
 
 public abstract class ScenarioStrategy {
 
-    public abstract int processScenario(Scenario scenario);
+    public abstract Object processScenario(Scenario scenario);
 }

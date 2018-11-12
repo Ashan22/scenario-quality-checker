@@ -4,6 +4,7 @@
     "Bibliotekarz"
   ],
   "systemActor": "System",
+  "level": 2,
   "steps": [
     {
       "content": "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",

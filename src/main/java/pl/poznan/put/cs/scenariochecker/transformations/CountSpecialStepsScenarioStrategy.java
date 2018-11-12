@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
 
     @Override
-    public int processScenario(Scenario scenario) {
+    public Object processScenario(Scenario scenario) {
         return countSpecialSteps(scenario.getSteps());
     }
 

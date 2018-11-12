@@ -4,10 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
-import pl.poznan.put.cs.scenariochecker.transformations.CountSpecialStepsScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.CountStepsScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.ScenarioStrategy;
+import pl.poznan.put.cs.scenariochecker.transformations.*;
 
 @RestController
 public class ScenarioController {
@@ -17,14 +14,14 @@ public class ScenarioController {
     @PostMapping("/count")
     public String count(@RequestBody Scenario scenario) {
         this.scenarioStrategy = new CountStepsScenarioStrategy();
-        int numberOfSteps = this.scenarioStrategy.processScenario(scenario);
+        int numberOfSteps = (int) this.scenarioStrategy.processScenario(scenario);
         return String.valueOf(numberOfSteps);
     }
 
     @PostMapping("/steps-without-actor")
     public String countStepsWithoutActor(@RequestBody Scenario scenario) {
         this.scenarioStrategy = new CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy();
-        int stepsWithoutActorsNameAtTheBeginning = this.scenarioStrategy.processScenario(scenario);
+        int stepsWithoutActorsNameAtTheBeginning = (int) this.scenarioStrategy.processScenario(scenario);
         return String.valueOf(stepsWithoutActorsNameAtTheBeginning);
     }
 
@@ -32,7 +29,13 @@ public class ScenarioController {
     @PostMapping("/special-steps")
     public String countSpecialSteps(@RequestBody Scenario scenario) {
         this.scenarioStrategy = new CountSpecialStepsScenarioStrategy();
-        int specialSteps = this.scenarioStrategy.processScenario(scenario);
+        int specialSteps = (int) this.scenarioStrategy.processScenario(scenario);
         return String.valueOf(specialSteps);
+    }
+
+    @PostMapping("/scenarios/levels")
+    public String returnSubScenarios(@RequestBody Scenario scenario) {
+        this.scenarioStrategy = new ReturnSubScenariosStrategy();
+        return (String) this.scenarioStrategy.processScenario(scenario);
     }
 }
