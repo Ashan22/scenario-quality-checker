@@ -20,7 +20,7 @@ public class ReturnSubScenariosStrategy extends ScenarioStrategy {
     @Override
     public String processScenario(Scenario scenario) {
         maxLevel = scenario.getLevel();
-        JSONArray nestedSteps = new JSONArray();
+        JSONArray nestedSteps = new JSONArray() ;
 
         if (maxLevel < 0) {
             throw new ValueException("Level cannot be lower than 1");
@@ -46,13 +46,13 @@ public class ReturnSubScenariosStrategy extends ScenarioStrategy {
      */
     private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, int currentLevel) {
         JSONArray currentStepsArray = new JSONArray();
-            steps.forEach(step ->
-                    currentStepsArray.add(new JSONObject()
-                            .appendField("content", step.getContent())
-                            .appendField("subSteps", currentLevel >= maxLevel ?
-                                    new JSONArray() :
-                                    createRecursivelyNestedStepsJson(step.getSubSteps(), currentLevel + 1)))
-            );
+        steps.forEach(step ->
+                currentStepsArray.add(new JSONObject()
+                        .appendField("content", step.getContent())
+                        .appendField("subSteps", currentLevel >= maxLevel ?
+                                new JSONArray() :
+                                createRecursivelyNestedStepsJson(step.getSubSteps(), currentLevel + 1)))
+        );
         return currentStepsArray;
     }
 
