@@ -24,7 +24,7 @@ public class CountSpecialStepsScenarioStrategyTest {
         this.scenario = new Scenario();
         this.countSpecialStepsScenarioStrategy = new CountSpecialStepsScenarioStrategy();
         this.oneStep = new Step("oneStep", Collections.emptyList());
-        Step firstNestepStep = new Step("IF step", Arrays.asList(oneStep));
+        Step firstNestepStep = new Step("IF step", Collections.singletonList(oneStep));
         Step secondNestepStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestepStep));
         stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep));
         stepWithSixSpecialSteps = new Step("IF step",Arrays.asList(secondNestepStep,oneStep,stepWithNestedSteps));
@@ -33,29 +33,29 @@ public class CountSpecialStepsScenarioStrategyTest {
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
-        countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfSpecialSteps());
+        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        assertEquals(0, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenOneSteps_expectZero() {
-        scenario.setSteps(Arrays.asList(oneStep));
-        countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(0, scenario.getNumberOfSpecialSteps());
+        scenario.setSteps(Collections.singletonList(oneStep));
+        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        assertEquals(0, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenNestedSteps_expectThree() {
-        scenario.setSteps(Arrays.asList(stepWithNestedSteps));
-        countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(3, scenario.getNumberOfSpecialSteps());
+        scenario.setSteps(Collections.singletonList(stepWithNestedSteps));
+        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        assertEquals(3, actual);
     }
 
     @Test
     public void testCountSpecialStepsScenarioStrategy_givenNestedSteps_expectSix() {
-        scenario.setSteps(Arrays.asList(stepWithSixSpecialSteps));
-        countSpecialStepsScenarioStrategy.processScenario(scenario);
-        assertEquals(6, scenario.getNumberOfSpecialSteps());
+        scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
+        int actual = countSpecialStepsScenarioStrategy.processScenario(scenario);
+        assertEquals(6, actual);
     }
 
 }
