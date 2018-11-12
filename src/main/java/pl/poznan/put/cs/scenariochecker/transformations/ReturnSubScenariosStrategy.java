@@ -12,6 +12,10 @@ public class ReturnSubScenariosStrategy extends ScenarioStrategy {
 
     private int maxLevel;
 
+    /**
+     * @param scenario
+     * @return New scenario which contains steps only for chosen level
+     */
     @Override
     public String processScenario(Scenario scenario) {
         maxLevel = scenario.getLevel();
@@ -31,6 +35,11 @@ public class ReturnSubScenariosStrategy extends ScenarioStrategy {
                 .toJSONString();
     }
 
+    /**
+     * @param steps the list of steps on current level
+     * @param currentLevel
+     * @return json array of steps for chosen level
+     */
     private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, int currentLevel) {
         JSONArray currentStepsArray = new JSONArray();
 
