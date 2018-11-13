@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Endpoint:
+<select name="endpoints" id="endpoint">
+    <option value="/count">/count</option>
+    <option value="/special-steps">/special-steps</option>
+    <option value="/steps-without-actor">/steps-without-actor</option>
+    <option value="/count-steps-without-actor">/count-steps-without-actor</option>
+</select>
+</br>
+Scenario: </br>
+<textarea rows="20" cols="80" id="scenario"></textarea></br>
+<button onclick="processScenario()">Check</button>
+</br><textarea rows="20" cols="80" id="response"></textarea>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    (function () {
+        document.getElementById("scenario").value = '{\n' +
+            '    "title": "Dodanie książki",\n' +
+            '    "actors": [\n' +
+            '      "Bibliotekarz"\n' +
+            '    ],\n' +
+            '    "systemActor": "System",\n' +
+            '    "steps": [\n' +
+            '      {\n' +
+            '        "content": "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",\n' +
+            '        "subSteps": []\n' +
+            '      },\n' +
+            '      {\n' +
+            '        "content": "Wyświetla się formularz.",\n' +
+            '        "subSteps": []\n' +
+            '      },\n' +
+            '      {\n' +
+            '        "content": "Bibliotekarz podaje dane książki.",\n' +
+            '        "subSteps": []\n' +
+            '      },\n' +
+            '      {\n' +
+            '        "content": "IF: Bibliotekarz pragnie dodać egzemplarze książki",\n' +
+            '        "subSteps": [\n' +
+            '          {\n' +
+            '            "content": "Bibliotekarz wybiera opcję definiowania egzemplarzy",\n' +
+            '            "subSteps": []\n' +
+            '          },\n' +
+            '          {\n' +
+            '            "content": "System prezentuje zdefiniowane egzemplarze",\n' +
+            '            "subSteps": []\n' +
+            '          },\n' +
+            '          {\n' +
+            '            "content": "FOR EACH egzemplarz:",\n' +
+            '            "subSteps": [\n' +
+            '              {\n' +
+            '                "content": "Bibliotekarz wybiera opcję dodania egzemplarza",\n' +
+            '                "subSteps": []\n' +
+            '              },\n' +
+            '              {\n' +
+            '                "content": "System prosi o podanie danych egzemplarza",\n' +
+            '                "subSteps": []\n' +
+            '              },\n' +
+            '              {\n' +
+            '                "content": "Bibliotekarz podaje dane egzemplarza i zatwierdza.",\n' +
+            '                "subSteps": []\n' +
+            '              },\n' +
+            '              {\n' +
+            '                "content": "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.",\n' +
+            '                "subSteps": []\n' +
+            '              }\n' +
+            '            ]\n' +
+            '          }\n' +
+            '        ]\n' +
+            '      },\n' +
+            '      {\n' +
+            '        "content": "Bibliotekarz zatwierdza dodanie książki.",\n' +
+            '        "subSteps": []\n' +
+            '      },\n' +
+            '      {\n' +
+            '        "content": "System informuje o poprawnym dodaniu książki.",\n' +
+            '        "subSteps": []\n' +
+            '      }\n' +
+            '    ]\n' +
+            '  }\n';
+    })();
+
+    function processScenario() {
+
+        var scenario = document.getElementById("scenario").value;
+
+        console.log(scenario);
+
+        var http = new XMLHttpRequest();
+        var url = 'http://localhost:8080';
+        var e = document.getElementById("endpoint");
+        url += e.options[e.selectedIndex].value;
+        http.open('POST', url, true);
+
+//Send the proper header information along with the request
+        http.setRequestHeader('Content-type', 'application/json');
+
+        http.onreadystatechange = function () {//Call a function when the state changes.
+            if (http.readyState === 4 && http.status === 200) {
+                document.getElementById("response").value = http.responseText;
+            }
+        };
+        http.send(scenario);
+    }
+
+    /*]]>*/
+</script>
+</html>
