@@ -18,3 +18,9 @@ After you transform scenario run from your terminal:
 ```bash
 curl -X GET localhost:8080/count
 ```
+
+Things to improve before next spring (#2):
+* improve communication between scrum master and the rest of the team
+* Artur should write tests
+* Improve code quality
+* We should be nicer to one another
