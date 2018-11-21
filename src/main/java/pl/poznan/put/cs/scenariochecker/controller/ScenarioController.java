@@ -1,6 +1,7 @@
 package pl.poznan.put.cs.scenariochecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,8 @@ public class ScenarioController {
     private ScenarioStrategy scenarioStrategy;
 
     private final ScenarioService scenarioService;
+
+    private String numeratedScenario;
 
     @Autowired
     public ScenarioController(ScenarioService scenarioService) {
@@ -54,4 +57,16 @@ public class ScenarioController {
         int specialSteps = this.scenarioStrategy.processScenario(scenario);
         return String.valueOf(specialSteps);
     }
+
+    @PostMapping("/scenarios/numerated")
+    public String numberTheSteps(@RequestBody Scenario scenario) {
+        this.numeratedScenario = scenarioService.numberTheStepsOfTheScenario(scenario.getSteps(), "");
+        return this.numeratedScenario;
+    }
+
+    @GetMapping("/scenarios/numerated")
+    public String numberTheSteps() {
+        return this.numeratedScenario;
+    }
+
 }
