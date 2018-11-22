@@ -75,4 +75,39 @@ public class ScenarioServiceTests {
         int resultListSize = scenarioService.retrieveStepsWithoutActorsNameAtTheBeginning(steps, scenario.getActors()).size();
         assertEquals(1, resultListSize);
     }
+
+    @Test
+    public void testScenarioService_givenOneStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n", resultString);
+    }
+
+    @Test
+    public void testScenarioService_givenSubStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        actorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        nestedStep.setSubSteps(new ArrayList<>(Collections.singletonList(actorStep)));
+        steps.add(nestedStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n2. IF nested step\n\t2.1. Actor step\n", resultString);
+    }
+
+    @Test
+    public void testScenarioService_givenTwoStepAndSubStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        actorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        nestedStep.setSubSteps(new ArrayList<>(Collections.singletonList(actorStep)));
+        steps.add(nestedStep);
+        steps.add(noActorStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n2. IF nested step\n\t2.1. Actor step\n3. Sample step\n", resultString);
+    }
+
 }
