@@ -23,8 +23,6 @@ public class ScenarioController {
 
     private final ScenarioService scenarioService;
 
-    private String numeratedScenario;
-
     @Autowired
     public ScenarioController(ScenarioService scenarioService) {
         this.scenarioService = scenarioService;
@@ -60,13 +58,8 @@ public class ScenarioController {
 
     @PostMapping("/scenarios/numerated")
     public String numberTheSteps(@RequestBody Scenario scenario) {
-        this.numeratedScenario = scenarioService.numberTheStepsOfTheScenario(scenario.getSteps(), "");
-        return this.numeratedScenario;
+        return scenarioService.numberTheStepsOfTheScenario(scenario.getSteps(), "");
     }
 
-    @GetMapping("/scenarios/numerated")
-    public String numberTheSteps() {
-        return this.numeratedScenario;
-    }
 
 }
