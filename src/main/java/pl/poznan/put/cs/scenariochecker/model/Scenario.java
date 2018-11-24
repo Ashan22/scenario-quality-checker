@@ -8,7 +8,6 @@ import java.util.List;
 public class Scenario {
     private String title;
     private String systemActor;
-    private Integer level;
     private List<Step> steps;
     private List<String> actors;
 }
