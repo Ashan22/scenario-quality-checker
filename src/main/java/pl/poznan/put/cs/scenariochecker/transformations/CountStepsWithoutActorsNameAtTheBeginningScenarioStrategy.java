@@ -17,7 +17,7 @@ public class CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy extends S
      * @param scenario This method is responsible for proccessing scenario when user want to count number of steps
      */
     @Override
-    public Object processScenario(Scenario scenario) {
+    public int processScenario(Scenario scenario) {
         List<String> allActors = new ArrayList<>(scenario.getActors());
         allActors.add(scenario.getSystemActor());
         return countStepsWithoutActorsNameAtTheBeginning(scenario.getSteps(), allActors);

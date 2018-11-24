@@ -28,16 +28,16 @@ public class ScenarioService {
 
     /**
      * @param scenario
+     * @param maxLevel target depth level
      * @return New scenario which contains steps only for chosen level
      */
-    public String processScenario(Scenario scenario) {
-        maxLevel = scenario.getLevel();
+    public String getSubscenariosToDepthLevel(Scenario scenario, Integer maxLevel) {
         JSONArray nestedSteps = new JSONArray();
 
         if (maxLevel < 0) {
             throw new ValueException("Level cannot be lower than 1");
         } else if (maxLevel > 0) {
-            nestedSteps = createRecursivelyNestedStepsJson(scenario.getSteps(), 1);
+            nestedSteps = createRecursivelyNestedStepsJson(scenario.getSteps(), 1, maxLevel);
         }
 
         JSONArray actorsJsonArray = new JSONArray();
@@ -53,17 +53,18 @@ public class ScenarioService {
 
     /**
      * @param steps        the list of steps on current level
-     * @param currentLevel
+     * @param currentLevel current depth level
+     * @param maxLevel target depth level
      * @return json array of steps for chosen level
      */
-    private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, int currentLevel) {
+    private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, Integer currentLevel, Integer maxLevel) {
         JSONArray currentStepsArray = new JSONArray();
         steps.forEach(step ->
                 currentStepsArray.add(new JSONObject()
                         .appendField("content", step.getContent())
                         .appendField("subSteps", currentLevel >= maxLevel ?
                                 new JSONArray() :
-                                createRecursivelyNestedStepsJson(step.getSubSteps(), currentLevel + 1)))
+                                createRecursivelyNestedStepsJson(step.getSubSteps(), currentLevel + 1, maxLevel)))
         );
         return currentStepsArray;
     }

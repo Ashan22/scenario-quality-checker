@@ -1,6 +1,8 @@
 package pl.poznan.put.cs.scenariochecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,9 +58,9 @@ public class ScenarioController {
         return String.valueOf(specialSteps);
     }
 
-    @PostMapping("/levels")
-    public String returnSubScenarios(@RequestBody Scenario scenario) {
-        this.scenarioStrategy = new ReturnSubScenariosStrategy();
-        return this.scenarioStrategy.processScenario(scenario);
+    @PostMapping("/levels/{level}")
+    ResponseEntity<String> returnSubScenarios(@RequestBody Scenario scenario, @PathVariable String level) {
+        return ResponseEntity.ok()
+                .body(scenarioService.getSubscenariosToDepthLevel(scenario,Integer.valueOf(level)));
     }
 }

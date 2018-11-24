@@ -16,7 +16,7 @@ public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
      * @param scenario This method is responsible for proccessing scenario when user want to count number of steps
      */
     @Override
-    public Object processScenario(Scenario scenario) {
+    public int processScenario(Scenario scenario) {
         return countSpecialSteps(scenario.getSteps());
     }
 
