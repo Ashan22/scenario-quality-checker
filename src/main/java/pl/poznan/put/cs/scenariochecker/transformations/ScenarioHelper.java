@@ -4,6 +4,11 @@ import pl.poznan.put.cs.scenariochecker.model.Step;
 
 import java.util.List;
 
+/** Scenario helper class
+ * @author Kamil Pluciński
+ * @author Artur Mierzwa
+ * @author Szymon Kukla
+ */
 public class ScenarioHelper {
 
     private ScenarioHelper() {
