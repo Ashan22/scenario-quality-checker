@@ -33,21 +33,21 @@ public class CountStepsWithoutActorsNameAtTheBeginningTest {
     @Test
     public void testCountStepsWithoutActors_givenZeroSteps_expectZero() {
         scenario.setSteps(Collections.emptyList());
-        int actual = (int) countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
+        int actual = countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
         assertEquals(0, actual);
     }
 
     @Test
     public void testCountStepsWithoutActors_givenOneSteps_expectOne() {
         scenario.setSteps(Collections.singletonList(oneStep));
-        int actual = (int) countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
+        int actual = countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
         assertEquals(1, actual);
     }
 
     @Test
     public void testCountStepsWithoutActors_givenNestedSteps_expectTwo() {
         scenario.setSteps(Collections.singletonList(stepWithNestedSteps));
-        int actual = (int) countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
+        int actual = countStepsWithoutActorsNameAtTheBeginning.processScenario(scenario);
         assertEquals(2, actual);
     }
 }
