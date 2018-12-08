@@ -14,6 +14,11 @@ import java.util.List;
 @Service
 public class ScenarioService {
 
+    /**
+     * @param steps list containts every step from scenario
+     * @param allActors list contains actors too keep
+     * @return list of steps only with actors
+     */
     public List<Step> retrieveStepsWithoutActorsNameAtTheBeginning(List<Step> steps, List<String> allActors) {
         List<Step> resultList = new ArrayList<>();
         for (Step s : steps) {
