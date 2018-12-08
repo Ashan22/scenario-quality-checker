@@ -23,16 +23,27 @@
     <div class="row">
         <br/>
     </div>
-    <div class="row">
-        <div class="col-lg-12 text-center">
+    <div class="row text-center">
+        <div class="offset-lg-4 col-lg-4">
             <label for="endpoint">Endpoint: </label>
-            <select name="endpoints" id="endpoint">
+
+            <select name="endpoints" class="form-control" id="endpoint">
                 <option value="/count">/count</option>
                 <option value="/special-steps">/special-steps</option>
                 <option value="/steps-without-actor">/steps-without-actor</option>
                 <option value="/count-steps-without-actor">/count-steps-without-actor</option>
+                <option value="/levels/">/levels/</option>
+            </select>
+
+            <select style="display:none" class="form-control" id="levels">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
             </select>
         </div>
+
     </div>
     <div class="row">
         <div class="col-lg-6 text-center">
@@ -53,6 +64,16 @@
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById("endpoint").onclick = function () {
+        let e = document.getElementById("endpoint");
+        if (e.options[e.selectedIndex].value === "/levels/") {
+            document.getElementById("levels").style.display = "block";
+        } else {
+            document.getElementById("levels").style.display = "none";
+        }
+    }
+</script>
 
 </body>
 <script type="text/javascript" th:src="@{/js/exampleScenario.js}"></script>
@@ -70,6 +91,11 @@
         let url = 'http://localhost:8080';
         let e = document.getElementById("endpoint");
         url += e.options[e.selectedIndex].value;
+
+        if (e.options[e.selectedIndex].value === "/levels/") {
+            let levels = document.getElementById("levels");
+            url += levels.options[levels.selectedIndex].value;
+        }
 
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/json');

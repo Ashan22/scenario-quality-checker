@@ -4,17 +4,21 @@
 University project for software engineering.
 Definition of done: https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSxEKEBzcopOqfu9OHFwQkD2oDQlztfqAW0Tf_IXjElZQyKDUrzl4-oxI78NQEHZaLh1Vorl2RSyEf3/pubhtml
 
-
-### How to transform scenario
-Start the scenario-checker and run from your terminal:
-
+### How to count number of steps
 ```bash
-curl -X POST localhost:8080/check -d @data/exampleScenario.json \
+curl -X POST localhost:8080/count -d @data/exampleScenario.json \
 --header "Content-Type: application/json"
 ```
 
-### How to count number of steps
-After you transform scenario run from your terminal:
+### How to get a sub-scenarios with specified deep level
 ```bash
-curl -X GET localhost:8080/count
+curl -X POST localhost:8080levels/{level} -d @data/exampleScenario.json \
+--header "Content-Type: application/json"
 ```
+where `{level}` is your deep level bigger or equal to 0
+
+Things to improve before next spring (#2):
+* improve communication between scrum master and the rest of the team
+* Artur should write tests
+* Improve code quality
+* We should be nicer to one another
