@@ -8,17 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
-import pl.poznan.put.cs.scenariochecker.transformations.*;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 import pl.poznan.put.cs.scenariochecker.service.ScenarioService;
 import pl.poznan.put.cs.scenariochecker.transformations.CountSpecialStepsScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.transformations.CountStepsScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.transformations.CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy;
 import pl.poznan.put.cs.scenariochecker.transformations.ScenarioStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
