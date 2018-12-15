@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** Scenario strategy for counting special steps
+ * @author Artur Mierzwa
+ */
 public class CountSpecialStepsScenarioStrategy extends ScenarioStrategy {
 
+    /**
+     * @param scenario This method is responsible for proccessing scenario when user want to count number of steps
+     */
     @Override
     public int processScenario(Scenario scenario) {
         return countSpecialSteps(scenario.getSteps());

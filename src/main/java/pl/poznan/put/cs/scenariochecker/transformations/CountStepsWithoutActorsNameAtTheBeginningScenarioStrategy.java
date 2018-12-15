@@ -7,8 +7,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** Scenario strategy for counting steps without actor's name at the beginning
+ * @author Szymon Kukla
+ * @author Damian Horna
+ */
 public class CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy extends ScenarioStrategy {
 
+    /**
+     * @param scenario This method is responsible for proccessing scenario when user want to count number of steps
+     */
     @Override
     public int processScenario(Scenario scenario) {
         List<String> allActors = new ArrayList<>(scenario.getActors());

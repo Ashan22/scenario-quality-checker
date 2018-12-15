@@ -1,0 +1,63 @@
+let exampleScenario = `{  
+  "title": "Dodanie książki",
+  "actors": [
+    "Bibliotekarz"
+  ],
+  "systemActor": "System",
+  "steps": [
+    {
+      "content": "Bibliotekarz wybiera opcje dodania nowej pozycji książkowej",
+      "subSteps": []
+    },
+    {
+      "content": "Wyświetla się formularz.",
+      "subSteps": []
+    },
+    {
+      "content": "Bibliotekarz podaje dane książki.",
+      "subSteps": []
+    },
+    {
+      "content": "IF: Bibliotekarz pragnie dodać egzemplarze książki",
+      "subSteps": [
+        {
+          "content": "Bibliotekarz wybiera opcję definiowania egzemplarzy",
+          "subSteps": []
+        },
+        {
+          "content": "System prezentuje zdefiniowane egzemplarze",
+          "subSteps": []
+        },
+        {
+          "content": "FOR EACH egzemplarz:",
+          "subSteps": [
+            {
+              "content": "Bibliotekarz wybiera opcję dodania egzemplarza",
+              "subSteps": []
+            },
+            {
+              "content": "System prosi o podanie danych egzemplarza",
+              "subSteps": []
+            },
+            {
+              "content": "Bibliotekarz podaje dane egzemplarza i zatwierdza.",
+              "subSteps": []
+            },
+            {
+              "content": "System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.",
+              "subSteps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "content": "Bibliotekarz zatwierdza dodanie książki.",
+      "subSteps": []
+    },
+    {
+      "content": "System informuje o poprawnym dodaniu książki.",
+      "subSteps": []
+    }
+  ]
+}`;

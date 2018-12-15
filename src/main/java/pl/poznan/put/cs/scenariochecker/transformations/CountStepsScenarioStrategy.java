@@ -5,6 +5,9 @@ import pl.poznan.put.cs.scenariochecker.model.Step;
 
 import java.util.List;
 
+/** Scenario strategy for counting all steps
+ * @author Kamil Pluciński
+ */
 public class CountStepsScenarioStrategy extends ScenarioStrategy {
 
     /**
