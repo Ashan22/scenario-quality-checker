@@ -66,7 +66,7 @@ public class ScenarioServiceTests {
         Step firstNestepStep = new Step("IF step", Collections.singletonList(oneStep));
         Step secondNestepStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestepStep));
         Step stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep));
-        stepWithSixSpecialSteps = new Step("IF step",Arrays.asList(secondNestepStep, oneStep, stepWithNestedSteps));
+        stepWithSixSpecialSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep, stepWithNestedSteps));
     }
 
     @Test
@@ -94,6 +94,41 @@ public class ScenarioServiceTests {
         assertEquals(1, resultListSize);
     }
 
+    @Test
+    public void testScenarioService_givenOneStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n", resultString);
+    }
+
+    @Test
+    public void testScenarioService_givenSubStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        actorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        nestedStep.setSubSteps(new ArrayList<>(Collections.singletonList(actorStep)));
+        steps.add(nestedStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n2. IF nested step\n\t2.1. Actor step\n", resultString);
+    }
+
+    @Test
+    public void testScenarioService_givenTwoStepAndSubStep() {
+        List<Step> steps = new ArrayList<>();
+        noActorStep.setSubSteps(new ArrayList<>());
+        actorStep.setSubSteps(new ArrayList<>());
+        steps.add(noActorStep);
+        nestedStep.setSubSteps(new ArrayList<>(Collections.singletonList(actorStep)));
+        steps.add(nestedStep);
+        steps.add(noActorStep);
+        String resultString = scenarioService.numberTheStepsOfTheScenario(steps, "");
+        assertEquals("1. Sample step\n2. IF nested step\n\t2.1. Actor step\n3. Sample step\n", resultString);
+    }
+
+
     @Test(expected = ValueException.class)
     public void processScenario_givenNegativeLevelNumber_expectException() {
         scenarioService.getSubscenariosToDepthLevel(scenario, -1);
@@ -105,27 +140,27 @@ public class ScenarioServiceTests {
     }
 
     @Test
-    public void processScenario_whenLevelIsEqualOne(){
+    public void processScenario_whenLevelIsEqualOne() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
-        assertEquals(EXPECTED_OUTPUT_LEVEL_ONE, scenarioService.getSubscenariosToDepthLevel(scenario,1));
+        assertEquals(EXPECTED_OUTPUT_LEVEL_ONE, scenarioService.getSubscenariosToDepthLevel(scenario, 1));
     }
 
 
     @Test
-    public void processScenario_whenLevelIsEqualTwo(){
+    public void processScenario_whenLevelIsEqualTwo() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
-        assertEquals(EXPECTED_OUTPUT_LEVEL_TWO, scenarioService.getSubscenariosToDepthLevel(scenario,2));
+        assertEquals(EXPECTED_OUTPUT_LEVEL_TWO, scenarioService.getSubscenariosToDepthLevel(scenario, 2));
     }
 
     @Test
-    public void processScenario_whenLevelIsEqualThree(){
+    public void processScenario_whenLevelIsEqualThree() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
         assertEquals(EXPECTED_OUTPUT_LEVEL_THREE, scenarioService.getSubscenariosToDepthLevel(scenario, 3));
     }
 
     @Test
-    public void processScenario_whenLevelIsEqualOneHundrer(){
+    public void processScenario_whenLevelIsEqualOneHundrer() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
-        assertEquals(EXPECTED_OUTPUT_LEVEL_ONEHUNDRER, scenarioService.getSubscenariosToDepthLevel(scenario,100));
+        assertEquals(EXPECTED_OUTPUT_LEVEL_ONEHUNDRER, scenarioService.getSubscenariosToDepthLevel(scenario, 100));
     }
 }

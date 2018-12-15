@@ -15,7 +15,7 @@ import java.util.List;
 public class ScenarioService {
 
     /**
-     * @param steps list containts every step from scenario
+     * @param steps     list containts every step from scenario
      * @param allActors list contains actors too keep
      * @return list of steps only with actors
      */
@@ -29,6 +29,21 @@ public class ScenarioService {
             }
         }
         return resultList;
+    }
+
+    public String numberTheStepsOfTheScenario(List<Step> steps, String prefix) {
+        StringBuilder numeratedScenario = new StringBuilder();
+        StringBuilder subprefix = new StringBuilder("\t" + prefix);
+        int currentNumber = 1;
+        for (Step s : steps) {
+            numeratedScenario.append(prefix + currentNumber + ". ");
+            numeratedScenario.append(s.getContent() + "\n");
+            if (s.getSubSteps().size() != 0) {
+                numeratedScenario.append(numberTheStepsOfTheScenario(s.getSubSteps(), subprefix.append(currentNumber + ".").toString()));
+            }
+            currentNumber += 1;
+        }
+        return numeratedScenario.toString();
     }
 
     /**
@@ -59,7 +74,7 @@ public class ScenarioService {
     /**
      * @param steps        the list of steps on current level
      * @param currentLevel current depth level
-     * @param maxLevel target depth level
+     * @param maxLevel     target depth level
      * @return json array of steps for chosen level
      */
     private JSONArray createRecursivelyNestedStepsJson(List<Step> steps, Integer currentLevel, Integer maxLevel) {
