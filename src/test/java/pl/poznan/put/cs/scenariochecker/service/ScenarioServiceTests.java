@@ -17,16 +17,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-
+import static pl.poznan.put.cs.scenariochecker.service.GetSubScenariosOutputs.*;
 
 @RunWith(SpringRunner.class)
 public class ScenarioServiceTests {
-
-    private static final String EXPECTED_OUTPUT_LEVEL_ZERO = "{\"actors\":[\"Actor\"],\"systemActor\":\"System Actor\",\"title\":\"Title\",\"steps\":[]}";
-    private static final String EXPECTED_OUTPUT_LEVEL_ONE = "{\"actors\":[\"Actor\"],\"systemActor\":\"System Actor\",\"title\":\"Title\",\"steps\":[{\"subSteps\":[],\"content\":\"IF step\"}]}";
-    private static final String EXPECTED_OUTPUT_LEVEL_TWO = "{\"actors\":[\"Actor\"],\"systemActor\":\"System Actor\",\"title\":\"Title\",\"steps\":[{\"subSteps\":[{\"subSteps\":[],\"content\":\"FOR EACH step\"},{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[],\"content\":\"IF step\"}],\"content\":\"IF step\"}]}";
-    private static final String EXPECTED_OUTPUT_LEVEL_THREE = "{\"actors\":[\"Actor\"],\"systemActor\":\"System Actor\",\"title\":\"Title\",\"steps\":[{\"subSteps\":[{\"subSteps\":[{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[],\"content\":\"IF step\"}],\"content\":\"FOR EACH step\"},{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[{\"subSteps\":[],\"content\":\"FOR EACH step\"},{\"subSteps\":[],\"content\":\"oneStep\"}],\"content\":\"IF step\"}],\"content\":\"IF step\"}]}";
-    private static final String EXPECTED_OUTPUT_LEVEL_ONEHUNDRER = "{\"actors\":[\"Actor\"],\"systemActor\":\"System Actor\",\"title\":\"Title\",\"steps\":[{\"subSteps\":[{\"subSteps\":[{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[{\"subSteps\":[],\"content\":\"oneStep\"}],\"content\":\"IF step\"}],\"content\":\"FOR EACH step\"},{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[{\"subSteps\":[{\"subSteps\":[],\"content\":\"oneStep\"},{\"subSteps\":[{\"subSteps\":[],\"content\":\"oneStep\"}],\"content\":\"IF step\"}],\"content\":\"FOR EACH step\"},{\"subSteps\":[],\"content\":\"oneStep\"}],\"content\":\"IF step\"}],\"content\":\"IF step\"}]}";
 
     private Scenario scenario;
     private Step noActorStep;
@@ -63,10 +57,10 @@ public class ScenarioServiceTests {
         scenario.setTitle("Title");
         scenario.setSystemActor("System Actor");
         Step oneStep = new Step("oneStep", Collections.emptyList());
-        Step firstNestepStep = new Step("IF step", Collections.singletonList(oneStep));
-        Step secondNestepStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestepStep));
-        Step stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep));
-        stepWithSixSpecialSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep, stepWithNestedSteps));
+        Step firstNestedStep = new Step("IF step", Collections.singletonList(oneStep));
+        Step secondNestedStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestedStep));
+        Step stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestedStep, oneStep));
+        stepWithSixSpecialSteps = new Step("IF step", Arrays.asList(secondNestedStep, oneStep, stepWithNestedSteps));
     }
 
     @Test
@@ -128,7 +122,6 @@ public class ScenarioServiceTests {
         assertEquals("1. Sample step\n2. IF nested step\n\t2.1. Actor step\n3. Sample step\n", resultString);
     }
 
-
     @Test(expected = ValueException.class)
     public void processScenario_givenNegativeLevelNumber_expectException() {
         scenarioService.getSubscenariosToDepthLevel(scenario, -1);
@@ -159,8 +152,8 @@ public class ScenarioServiceTests {
     }
 
     @Test
-    public void processScenario_whenLevelIsEqualOneHundrer() {
+    public void processScenario_whenLevelIsEqualOneHundred() {
         scenario.setSteps(Collections.singletonList(stepWithSixSpecialSteps));
-        assertEquals(EXPECTED_OUTPUT_LEVEL_ONEHUNDRER, scenarioService.getSubscenariosToDepthLevel(scenario, 100));
+        assertEquals(EXPECTED_OUTPUT_LEVEL_ONE_HUNDRED, scenarioService.getSubscenariosToDepthLevel(scenario, 100));
     }
 }
