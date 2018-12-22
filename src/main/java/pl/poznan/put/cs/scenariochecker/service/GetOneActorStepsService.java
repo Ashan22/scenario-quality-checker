@@ -13,6 +13,11 @@ import java.util.List;
 @Slf4j
 public class GetOneActorStepsService {
 
+    /**
+     * @param scenario
+     * @param actor
+     * @return Pretty json array with steps that belong only for actor provided in functions argument
+     */
     public String getListOfActorsSteps(Scenario scenario, String actor) {
         JsonArray actorsListJson = new JsonArray();
         List<Step> flatStepsList = new ArrayList<>();
@@ -27,6 +32,10 @@ public class GetOneActorStepsService {
                 .toJson(actorsListJson);
     }
 
+    /**
+     * @param steps Every this step and substeps will be flatten
+     * @param flatStepsList output list where steps will be saved
+     */
     void createFlatListOfSteps(List<Step> steps, List<Step> flatStepsList) {
         for (Step step : steps) {
             if (ScenarioHelper.isSpecialStep(step)) {
