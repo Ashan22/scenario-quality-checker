@@ -8,6 +8,7 @@ import pl.poznan.put.cs.scenariochecker.model.Step;
 import pl.poznan.put.cs.scenariochecker.transformations.ScenarioHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -23,7 +24,7 @@ public class GetOneActorStepsService {
         List<Step> flatStepsList = new ArrayList<>();
         createFlatListOfSteps(scenario.getSteps(), flatStepsList);
         log.info("Created flat list of actor steps");
-        flatStepsList.removeIf(step -> !step.getContent().startsWith(actor));
+        flatStepsList.removeIf(step -> ScenarioHelper.notBeginsWithActorsName(step, Collections.singletonList(actor)));
         flatStepsList.forEach(step -> actorsListJson.add(step.getContent()));
         log.info("Removed steps which did not belong to actor");
         return new GsonBuilder()
