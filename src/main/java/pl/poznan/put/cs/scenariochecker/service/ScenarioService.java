@@ -1,5 +1,7 @@
 package pl.poznan.put.cs.scenariochecker.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -63,12 +65,16 @@ public class ScenarioService {
         JSONArray actorsJsonArray = new JSONArray();
         actorsJsonArray.addAll(scenario.getActors());
 
-        return new JSONObject()
+        JSONObject json = new JSONObject()
                 .appendField("title", scenario.getTitle())
                 .appendField("systemActor", scenario.getSystemActor())
                 .appendField("actors", actorsJsonArray)
-                .appendField("steps", nestedSteps)
-                .toJSONString();
+                .appendField("steps", nestedSteps);
+
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(json);
     }
 
     /**
