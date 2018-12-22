@@ -26,7 +26,7 @@ public class ScenarioHelper {
      * @param step, list of actors
      * @return true if given step begins with actor's name
      */
-    public static boolean beginsWithActorsName(Step step, List<String> actors) {
-        return actors.stream().anyMatch(a -> step.getContent().startsWith(a));
+    public static boolean notBeginsWithActorsName(Step step, List<String> actors) {
+        return actors.stream().noneMatch(a -> step.getContent().startsWith(a));
     }
 }

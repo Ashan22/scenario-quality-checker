@@ -4,17 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
-import pl.poznan.put.cs.scenariochecker.service.ScenarioService;
-import pl.poznan.put.cs.scenariochecker.transformations.CountSpecialStepsScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.CountStepsScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy;
-import pl.poznan.put.cs.scenariochecker.transformations.ScenarioStrategy;
+import pl.poznan.put.cs.scenariochecker.service.GetOneActorStepsService;
+import pl.poznan.put.cs.scenariochecker.service.RetrieveStepsWithoutActorsNameAtTheBeginningService;
+import pl.poznan.put.cs.scenariochecker.service.SubscenariosToDepthLevelService;
+import pl.poznan.put.cs.scenariochecker.transformations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +22,6 @@ import java.util.List;
 public class ScenarioController {
 
     private ScenarioStrategy scenarioStrategy;
-
-    private final ScenarioService scenarioService;
-
-    @Autowired
-    public ScenarioController(ScenarioService scenarioService) {
-        this.scenarioService = scenarioService;
-    }
 
     @PostMapping("/count")
     public String count(@RequestBody Scenario scenario) {
@@ -53,6 +44,7 @@ public class ScenarioController {
         log.info("post steps without actor");
         List<String> allActors = new ArrayList<>(scenario.getActors());
         allActors.add(scenario.getSystemActor());
+        RetrieveStepsWithoutActorsNameAtTheBeginningService scenarioService = new RetrieveStepsWithoutActorsNameAtTheBeginningService();
         return scenarioService.retrieveStepsWithoutActorsNameAtTheBeginning(scenario.getSteps(), allActors);
     }
 
@@ -66,13 +58,24 @@ public class ScenarioController {
 
     @PostMapping("/scenarios/numerated")
     public String numberTheSteps(@RequestBody Scenario scenario) {
+        log.info("post numerated scenario");
+        RetrieveStepsWithoutActorsNameAtTheBeginningService scenarioService = new RetrieveStepsWithoutActorsNameAtTheBeginningService();
         return scenarioService.numberTheStepsOfTheScenario(scenario.getSteps(), "");
     }
 
     @PostMapping("/levels/{level}")
     ResponseEntity<String> returnSubScenarios(@RequestBody Scenario scenario, @PathVariable String level) {
         log.info("post levels");
+        SubscenariosToDepthLevelService scenarioService = new SubscenariosToDepthLevelService();
         return ResponseEntity.ok()
                 .body(scenarioService.getSubscenariosToDepthLevel(scenario, Integer.valueOf(level)));
+    }
+
+    @PostMapping("/steps/{actor}")
+    ResponseEntity<String> returnListOfActorsSteps(@RequestBody Scenario scenario, @PathVariable String actor) {
+        log.info("post steps %s", actor);
+        GetOneActorStepsService scenarioService = new GetOneActorStepsService();
+        return ResponseEntity.ok()
+                .body(scenarioService.getListOfActorsSteps(scenario, actor));
     }
 }
