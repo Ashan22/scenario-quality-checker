@@ -4,7 +4,6 @@ import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /** Scenario strategy for counting steps without actor's name at the beginning
@@ -32,7 +31,7 @@ public class CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy extends S
         int counter = 0;
 
         for (Step s : steps) {
-            if (!ScenarioHelper.beginsWithActorsName(s, allActors) && !ScenarioHelper.isSpecialStep(s)) {
+            if (ScenarioHelper.notBeginsWithActorsName(s, allActors) && !ScenarioHelper.isSpecialStep(s)) {
                 counter++;
             } else if (ScenarioHelper.isSpecialStep(s)) {
                 counter += countStepsWithoutActorsNameAtTheBeginning(s.getSubSteps(), allActors);

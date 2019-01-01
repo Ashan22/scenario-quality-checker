@@ -1,6 +1,5 @@
 package pl.poznan.put.cs.scenariochecker.service;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import net.minidev.json.JSONArray;
@@ -14,40 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ScenarioService {
-
-    /**
-     * @param steps     list containts every step from scenario
-     * @param allActors list contains actors too keep
-     * @return list of steps only with actors
-     */
-    public List<Step> retrieveStepsWithoutActorsNameAtTheBeginning(List<Step> steps, List<String> allActors) {
-        List<Step> resultList = new ArrayList<>();
-        for (Step s : steps) {
-            if (!ScenarioHelper.beginsWithActorsName(s, allActors) && !ScenarioHelper.isSpecialStep(s)) {
-                resultList.add(s);
-            } else if (ScenarioHelper.isSpecialStep(s)) {
-                resultList.addAll(retrieveStepsWithoutActorsNameAtTheBeginning(s.getSubSteps(), allActors));
-            }
-        }
-        return resultList;
-    }
-
-    public String numberTheStepsOfTheScenario(List<Step> steps, String prefix) {
-        StringBuilder numeratedScenario = new StringBuilder();
-        StringBuilder subprefix = new StringBuilder("\t" + prefix);
-        int currentNumber = 1;
-        for (Step s : steps) {
-            numeratedScenario.append(prefix + currentNumber + ". ");
-            numeratedScenario.append(s.getContent() + "\n");
-            if (s.getSubSteps().size() != 0) {
-                numeratedScenario.append(numberTheStepsOfTheScenario(s.getSubSteps(), subprefix.append(currentNumber + ".").toString()));
-            }
-            currentNumber += 1;
-        }
-        return numeratedScenario.toString();
-    }
-
+public class SubscenariosToDepthLevelService {
     /**
      * @param scenario
      * @param maxLevel target depth level

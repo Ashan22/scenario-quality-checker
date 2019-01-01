@@ -34,6 +34,7 @@
                 <option value="/count-steps-without-actor">/count-steps-without-actor</option>
                 <option value="/levels/">/levels/</option>
                 <option value="/scenarios/numerated/">/scenarios/numerated/</option>
+                <option value="/steps/">/steps/</option>
             </select>
 
             <select style="display:none" class="form-control" id="levels">
@@ -44,6 +45,11 @@
                 <option>5</option>
                 <option>6</option>
             </select>
+
+            <div id="actor-steps" style="display:none">
+                <input class="form-control" type="text" placeholder="Actor name" >
+            </div>
+
         </div>
 
     </div>
@@ -69,10 +75,16 @@
 <script>
     document.getElementById("endpoint").onclick = function () {
         let e = document.getElementById("endpoint");
+        console.log(e.options[e.selectedIndex].value)
         if (e.options[e.selectedIndex].value === "/levels/") {
             document.getElementById("levels").style.display = "block";
+            document.getElementById("actor-steps").style.display = "none";
+        } else if (e.options[e.selectedIndex].value === "/steps/") {
+            document.getElementById("actor-steps").style.display = "block";
+            document.getElementById("levels").style.display = "none";
         } else {
             document.getElementById("levels").style.display = "none";
+            document.getElementById("actor-steps").style.display = "none";
         }
     }
 </script>
@@ -97,6 +109,12 @@
         if (e.options[e.selectedIndex].value === "/levels/") {
             let levels = document.getElementById("levels");
             url += levels.options[levels.selectedIndex].value;
+        }
+
+        if (e.options[e.selectedIndex].value === "/steps/") {
+            let actor = document.getElementById("actor-steps").getElementsByClassName("form-control")[0];
+            console.log(actor);
+            url += actor.value;
         }
 
         http.open('POST', url, true);
