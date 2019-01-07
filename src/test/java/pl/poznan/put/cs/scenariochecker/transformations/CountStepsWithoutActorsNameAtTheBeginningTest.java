@@ -2,6 +2,9 @@ package pl.poznan.put.cs.scenariochecker.transformations;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 
@@ -10,11 +13,16 @@ import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CountStepsWithoutActorsNameAtTheBeginningTest {
 
-    private Scenario scenario;
+    @Mock
     private CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy countStepsWithoutActorsNameAtTheBeginning;
+
+    private Scenario scenario;
     private Step oneStep;
     private Step stepWithNestedSteps;
 
@@ -24,10 +32,11 @@ public class CountStepsWithoutActorsNameAtTheBeginningTest {
         this.scenario = new Scenario();
         this.scenario.setActors(actors);
         scenario.setSystemActor("System");
-        this.countStepsWithoutActorsNameAtTheBeginning = new CountStepsWithoutActorsNameAtTheBeginningScenarioStrategy();
         this.oneStep = new Step("oneStep", Collections.emptyList());
-        Step firstNestepStep = new Step("Wrong step", Collections.singletonList(oneStep));
-        stepWithNestedSteps = new Step("IF step", Arrays.asList(firstNestepStep, oneStep));
+        Step firstNestedStep = new Step("Wrong step", Collections.singletonList(oneStep));
+        stepWithNestedSteps = new Step("IF step", Arrays.asList(firstNestedStep, oneStep));
+
+        when(countStepsWithoutActorsNameAtTheBeginning.processScenario(any(Scenario.class))).thenCallRealMethod();
     }
 
     @Test
