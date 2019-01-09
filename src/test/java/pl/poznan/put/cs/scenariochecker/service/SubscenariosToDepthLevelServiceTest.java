@@ -3,6 +3,9 @@ package pl.poznan.put.cs.scenariochecker.service;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 
@@ -11,17 +14,22 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 import static pl.poznan.put.cs.scenariochecker.service.GetSubScenariosOutputs.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SubscenariosToDepthLevelServiceTest {
+
+    @Mock
+    private SubscenariosToDepthLevelService scenarioService;
 
     private Scenario scenario;
     private Step stepWithSixSpecialSteps;
-    private SubscenariosToDepthLevelService scenarioService;
 
     @Before
     public void setUp() {
-        scenarioService = new SubscenariosToDepthLevelService();
 
         scenario = new Scenario();
         scenario.setActors(new ArrayList<>(Collections.singletonList("Actor")));
@@ -42,6 +50,8 @@ public class SubscenariosToDepthLevelServiceTest {
         Step secondNestedStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestedStep));
         Step stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestedStep, oneStep));
         stepWithSixSpecialSteps = new Step("IF step", Arrays.asList(secondNestedStep, oneStep, stepWithNestedSteps));
+
+        when(scenarioService.getSubscenariosToDepthLevel(any(Scenario.class),anyInt())).thenCallRealMethod();
     }
 
     @Test(expected = ValueException.class)

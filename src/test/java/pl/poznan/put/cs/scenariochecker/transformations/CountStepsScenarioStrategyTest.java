@@ -2,29 +2,38 @@ package pl.poznan.put.cs.scenariochecker.transformations;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
+import org.junit.runner.RunWith;
 
+import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.Collections;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CountStepsScenarioStrategyTest {
 
-    private Scenario scenario;
+    @Mock
     private CountStepsScenarioStrategy countStepsScenarioStrategy;
+
+    private Scenario scenario;
     private Step oneStep;
     private Step stepWithNestedSteps;
 
     @Before
     public void setUp() {
         this.scenario = new Scenario();
-        this.countStepsScenarioStrategy = new CountStepsScenarioStrategy();
         this.oneStep = new Step("oneStep", Collections.emptyList());
         Step firstNestepStep = new Step("IF step", Collections.singletonList(oneStep));
         Step secondNestepStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestepStep));
         stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep));
+
+        when(countStepsScenarioStrategy.processScenario(any(Scenario.class))).thenCallRealMethod();
     }
 
     @Test

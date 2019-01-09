@@ -2,6 +2,9 @@ package pl.poznan.put.cs.scenariochecker.transformations;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import pl.poznan.put.cs.scenariochecker.model.Scenario;
 import pl.poznan.put.cs.scenariochecker.model.Step;
 
@@ -10,11 +13,16 @@ import java.util.Collections;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CountSpecialStepsScenarioStrategyTest {
 
-    private Scenario scenario;
+    @Mock
     private CountSpecialStepsScenarioStrategy countSpecialStepsScenarioStrategy;
+
+    private Scenario scenario;
     private Step oneStep;
     private Step stepWithNestedSteps;
     private Step stepWithSixSpecialSteps;
@@ -22,12 +30,13 @@ public class CountSpecialStepsScenarioStrategyTest {
     @Before
     public void setUp() throws Exception {
         this.scenario = new Scenario();
-        this.countSpecialStepsScenarioStrategy = new CountSpecialStepsScenarioStrategy();
         this.oneStep = new Step("oneStep", Collections.emptyList());
         Step firstNestepStep = new Step("IF step", Collections.singletonList(oneStep));
         Step secondNestepStep = new Step("FOR EACH step", Arrays.asList(oneStep, firstNestepStep));
         stepWithNestedSteps = new Step("IF step", Arrays.asList(secondNestepStep, oneStep));
         stepWithSixSpecialSteps = new Step("IF step",Arrays.asList(secondNestepStep,oneStep,stepWithNestedSteps));
+
+        when(countSpecialStepsScenarioStrategy.processScenario(any(Scenario.class))).thenCallRealMethod();
     }
 
     @Test
